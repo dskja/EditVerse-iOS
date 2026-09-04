@@ -17,7 +17,7 @@ Repo: https://github.com/dskja/EditVerse-iOS
 
 1. Clone this repo on a Mac
 2. Open `EditVerse.xcodeproj`
-3. Set your **Team** under Signing \& Capabilities
+3. Set your **Team** under Signing & Capabilities
 4. Run on a simulator or device (iOS 17+)
 
 ## Build IPA with GitHub Actions
