@@ -81,23 +81,29 @@ struct ProfileView: View {
                     .foregroundStyle(EVTheme.mist)
             } else {
                 ForEach(posts) { post in
-                    HStack {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(post.title)
-                                .font(EVTheme.bodyFont)
-                                .foregroundStyle(EVTheme.soft)
-                            Text(post.category.rawValue)
+                    Button {
+                        store.selectedCategory = post.category
+                        store.activeTab = 0
+                    } label: {
+                        HStack {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(post.title)
+                                    .font(EVTheme.bodyFont)
+                                    .foregroundStyle(EVTheme.soft)
+                                Text(post.category.rawValue)
+                                    .font(EVTheme.captionFont)
+                                    .foregroundStyle(EVTheme.cyan)
+                            }
+                            Spacer()
+                            Text(post.durationLabel)
                                 .font(EVTheme.captionFont)
-                                .foregroundStyle(EVTheme.cyan)
+                                .foregroundStyle(EVTheme.mist)
                         }
-                        Spacer()
-                        Text(post.durationLabel)
-                            .font(EVTheme.captionFont)
-                            .foregroundStyle(EVTheme.mist)
+                        .padding(12)
+                        .background(EVTheme.panel)
+                        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                     }
-                    .padding(12)
-                    .background(EVTheme.panel)
-                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    .buttonStyle(.plain)
                 }
             }
         }

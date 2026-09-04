@@ -1,16 +1,18 @@
 import SwiftUI
 
 struct MainTabView: View {
-    @State private var tab = 0
+    @EnvironmentObject private var store: FeedStore
 
     var body: some View {
-        TabView(selection: $tab) {
+        TabView(selection: $store.activeTab) {
             FeedView()
                 .tabItem { Label("Feed", systemImage: "play.rectangle.fill") }
                 .tag(0)
+
             DiscoverView()
                 .tabItem { Label("Discover", systemImage: "magnifyingglass") }
                 .tag(1)
+
             ProfileView()
                 .tabItem { Label("Profile", systemImage: "person.crop.circle") }
                 .tag(2)

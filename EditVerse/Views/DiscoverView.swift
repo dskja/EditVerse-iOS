@@ -2,23 +2,48 @@ import SwiftUI
 
 struct DiscoverView: View {
     @EnvironmentObject private var store: FeedStore
+    @State private var query = ""
 
     private let columns = [
         GridItem(.flexible(), spacing: 10),
         GridItem(.flexible(), spacing: 10)
     ]
 
+    private var results: [EditPost] {
+        let base = store.posts
+        let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return base }
+        return base.filter {
+            $0.title.localizedCaseInsensitiveContains(trimmed)
+                || $0.creatorHandle.localizedCaseInsensitiveContains(trimmed)
+                || $0.category.rawValue.localizedCaseInsensitiveContains(trimmed)
+        }
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(alignment: .leading, spacing: 18) {
-                    Text("Find the cut that hits.")
+                VStack(alignment: .leading, spacing: 16) {
+                    TextField("Search edits, creators, categories", text: $query)
+                        .font(EVTheme.bodyFont)
+                        .padding(12)
+                        .background(EVTheme.panel)
+                        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                        .foregroundStyle(EVTheme.soft)
+
+                    Text(results.isEmpty ? "No matches." : "Find the cut that hits.")
                         .font(EVTheme.bodyFont)
                         .foregroundStyle(EVTheme.mist)
 
                     LazyVGrid(columns: columns, spacing: 10) {
-                        ForEach(store.posts) { post in
-                            DiscoverTile(post: post)
+                        ForEach(results) { post in
+                            Button {
+                                store.selectedCategory = post.category
+                                store.activeTab = 0
+                            } label: {
+                                DiscoverTile(post: post)
+                            }
+                            .buttonStyle(.plain)
                         }
                     }
                 }
@@ -37,7 +62,7 @@ private struct DiscoverTile: View {
 
     var body: some View {
         ZStack(alignment: .bottomLeading) {
-            RoundedRectangle(cornerRadius: 18, style: .continuous)
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
                 .fill(
                     LinearGradient(
                         colors: [
@@ -51,8 +76,8 @@ private struct DiscoverTile: View {
                 .frame(height: 210)
                 .overlay(
                     Image(systemName: post.category.symbol)
-                        .font(.system(size: 42, weight: .bold))
-                        .foregroundStyle(.white.opacity(0.22))
+                        .font(.system(size: 40, weight: .bold))
+                        .foregroundStyle(.white.opacity(0.2))
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
                         .padding(14)
                 )
@@ -81,7 +106,7 @@ extension Color {
         case 6:
             (r, g, b) = ((int >> 16) & 0xFF, (int >> 8) & 0xFF, int & 0xFF)
         default:
-            (r, g, b) = (1, 1, 1)
+            (r, g, b) = (20, 20, 20)
         }
         self.init(
             .sRGB,
