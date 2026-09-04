@@ -1,0 +1,22 @@
+name: Cleanup Releases
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete unsigned-latest release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh release delete unsigned-latest --repo "${{ github.repository }}" --yes --cleanup-tag 2>/dev/null || true
+          echo "Done. Remaining releases:"
+          gh release list --repo "${{ github.repository }}" || true
