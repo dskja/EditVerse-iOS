@@ -1,0 +1,28 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Build EditVerse for simulator (no signing)"
+  lane :build_sim do
+    xcodebuild(
+      project: "EditVerse.xcodeproj",
+      scheme: "EditVerse",
+      configuration: "Release",
+      sdk: "iphonesimulator",
+      destination: "generic/platform=iOS Simulator",
+      build: true,
+      xcargs: "CODE_SIGNING_ALLOWED=NO"
+    )
+  end
+
+  desc "Archive and export IPA when signing is configured locally"
+  lane :ipa do
+    build_app(
+      project: "EditVerse.xcodeproj",
+      scheme: "EditVerse",
+      configuration: "Release",
+      export_method: ENV.fetch("EXPORT_METHOD", "ad-hoc"),
+      output_directory: "build/ipa",
+      output_name: "EditVerse"
+    )
+  end
+end
