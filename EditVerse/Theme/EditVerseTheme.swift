@@ -9,7 +9,6 @@ enum EVTheme {
     static let mist = Color.white.opacity(0.72)
     static let soft = Color.white.opacity(0.92)
 
-    static let displayFont = Font.system(size: 34, weight: .black, design: .rounded)
     static let titleFont = Font.system(size: 18, weight: .bold, design: .rounded)
     static let bodyFont = Font.system(size: 14, weight: .medium, design: .rounded)
     static let captionFont = Font.system(size: 12, weight: .semibold, design: .rounded)
