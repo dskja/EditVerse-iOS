@@ -33,9 +33,7 @@ final class PlayerUIView: UIView {
         queue.pause()
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -43,9 +41,8 @@ final class PlayerUIView: UIView {
     }
 
     func setActive(_ active: Bool) {
-        if active {
-            player?.play()
-        } else {
+        if active { player?.play() }
+        else {
             player?.pause()
             player?.seek(to: .zero)
         }
