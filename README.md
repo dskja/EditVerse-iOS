@@ -9,63 +9,50 @@ Repo: https://github.com/dskja/EditVerse-iOS
 - Full-screen vertical swipe feed with looping video
 - Categories, like / save / follow
 - Discover grid + profile desk
-- GitHub Actions workflow that:
-  1. Always builds the iOS Simulator app
-  2. Builds a signed **IPA** when Apple signing secrets are present
+- GitHub Actions workflow that builds an **unsigned IPA** (no Apple certs required)
 
 ## Open in Xcode
 
 1. Clone this repo on a Mac
 2. Open `EditVerse.xcodeproj`
-3. Set your **Team** under Signing & Capabilities
+3. Set your **Team** under Signing & Capabilities (only needed for device install from Xcode)
 4. Run on a simulator or device (iOS 17+)
 
-## Build IPA with GitHub Actions
+## Build unsigned IPA with GitHub Actions
 
-### 1. Required Apple setup
+No Apple Developer secrets needed.
 
-You need an [Apple Developer](https://developer.apple.com) account and:
+1. Push to `main`, or open **Actions → Build EditVerse IPA → Run workflow**
+2. Download the artifact **`EditVerse-unsigned-ipa`**
+3. Inside: `EditVerse-unsigned.ipa`
 
-- Distribution (or development) certificate as `.p12`
-- Matching provisioning profile for `com.editverse.app`
-- Your Team ID
+### What “unsigned” means
 
-### 2. Add repository secrets
+The IPA is packaged as a normal IPA (`Payload/EditVerse.app`) but **not code-signed**.
 
-Settings → Secrets and variables → Actions:
+- You can resign it yourself later (e.g. with your own cert / sideload tool)
+- It will **not** install on a normal iPhone until it is signed
 
-| Secret | Description |
-| --- | --- |
-| `BUILD_CERTIFICATE_BASE64` | base64 of your `.p12` |
-| `P12_PASSWORD` | password for the `.p12` |
-| `BUILD_PROVISION_PROFILE_BASE64` | base64 of `.mobileprovision` |
-| `KEYCHAIN_PASSWORD` | any strong password for the CI keychain |
-| `APPLE_TEAM_ID` | 10-character Team ID |
-| `EXPORT_METHOD` | optional: `ad-hoc`, `development`, `app-store`, or `enterprise` |
-
-Encode files locally:
+### Local unsigned IPA (on a Mac)
 
 ```bash
-chmod +x scripts/encode-signing.sh
-./scripts/encode-signing.sh ~/certs/editverse.p12 ~/certs/EditVerse.mobileprovision
+xcodebuild \
+  -project EditVerse.xcodeproj \
+  -scheme EditVerse \
+  -configuration Release \
+  -sdk iphoneos \
+  -destination 'generic/platform=iOS' \
+  -derivedDataPath build/DerivedData \
+  CODE_SIGNING_ALLOWED=NO \
+  CODE_SIGNING_REQUIRED=NO \
+  CODE_SIGN_IDENTITY="" \
+  build
+
+mkdir -p build/ipa/Payload
+cp -R build/DerivedData/Build/Products/Release-iphoneos/EditVerse.app build/ipa/Payload/
+(cd build/ipa && zip -qr EditVerse-unsigned.ipa Payload)
 ```
-
-### 3. Run the workflow
-
-- Push to `main`, or
-- Actions → **Build EditVerse IPA** → Run workflow
-
-Artifacts:
-
-- `EditVerse-simulator` — always
-- `EditVerse-ipa` — only when signing secrets are set
-
-Install ad-hoc IPAs with Apple Configurator, Xcode, or a device UDID listed in the provisioning profile.
 
 ## Bundle ID
 
 `com.editverse.app` — change in Xcode / `project.pbxproj` if needed.
-
-## Note on signing
-
-Without Apple certificates, CI still compiles for Simulator. A real-device IPA **must** be signed; GitHub Actions cannot create Apple credentials for you.
