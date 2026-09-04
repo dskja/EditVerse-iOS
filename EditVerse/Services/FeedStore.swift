@@ -6,16 +6,20 @@ final class FeedStore: ObservableObject {
     @Published var posts: [EditPost] = SampleEdits.all
     @Published var selectedCategory: EditCategory?
     @Published var following: Set<String> = []
+    @Published var isMuted = false
+    @Published var activeTab = 0
 
     var filteredPosts: [EditPost] {
         guard let selectedCategory else { return posts }
         return posts.filter { $0.category == selectedCategory }
     }
 
+    var isFeedVisible: Bool { activeTab == 0 }
+
     func toggleLike(_ id: String) {
         guard let index = posts.firstIndex(where: { $0.id == id }) else { return }
         posts[index].isLiked.toggle()
-        posts[index].likes += posts[index].isLiked ? 1 : -1
+        posts[index].likes = max(0, posts[index].likes + (posts[index].isLiked ? 1 : -1))
     }
 
     func toggleSave(_ id: String) {
@@ -34,6 +38,11 @@ final class FeedStore: ObservableObject {
     func isFollowing(_ handle: String) -> Bool {
         following.contains(handle)
     }
+
+    func shareCountBump(_ id: String) {
+        guard let index = posts.firstIndex(where: { $0.id == id }) else { return }
+        posts[index].shares += 1
+    }
 }
 
 enum SampleEdits {
@@ -43,7 +52,9 @@ enum SampleEdits {
         URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4")!,
         URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4")!,
         URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4")!,
-        URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4")!
+        URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4")!,
+        URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")!,
+        URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4")!
     ]
 
     static let all: [EditPost] = [
@@ -52,6 +63,8 @@ enum SampleEdits {
         EditPost(id: "3", title: "Final Whistle", caption: "Slow-mo impact frames synced to the kick drum.", creatorHandle: "pitchfire", creatorDisplayName: "Pitchfire", category: .sports, videoURL: samples[2], thumbnailGradient: ["#120A08", "#FF6B61"], likes: 33120, comments: 640, shares: 1904, isLiked: false, isSaved: false, durationLabel: "0:15", songTitle: "Stadium Heat — EditVerse Sound"),
         EditPost(id: "4", title: "Noir Trailer Cut", caption: "Letterbox · light leaks · cinematic whip pans.", creatorHandle: "reelnoir", creatorDisplayName: "Reel Noir", category: .cinema, videoURL: samples[3], thumbnailGradient: ["#0A0C12", "#7AE8DE"], likes: 12044, comments: 288, shares: 701, isLiked: false, isSaved: false, durationLabel: "0:27", songTitle: "Glass Corridor — EditVerse Sound"),
         EditPost(id: "5", title: "Bass Drop Sync", caption: "Waveform-driven cuts. Every hit lands on the beat.", creatorHandle: "kilohertz", creatorDisplayName: "Kilohertz", category: .music, videoURL: samples[4], thumbnailGradient: ["#0C1014", "#C8F52E"], likes: 77401, comments: 1502, shares: 4200, isLiked: true, isSaved: false, durationLabel: "0:20", songTitle: "Voltage — EditVerse Sound"),
-        EditPost(id: "6", title: "Midnight Apex", caption: "Tunnel light streaks + engine RPM matched to BPM.", creatorHandle: "apexlane", creatorDisplayName: "Apex Lane", category: .cars, videoURL: samples[5], thumbnailGradient: ["#0B0E12", "#33EBD9"], likes: 54002, comments: 998, shares: 2601, isLiked: false, isSaved: false, durationLabel: "0:24", songTitle: "Carbon Night — EditVerse Sound")
+        EditPost(id: "6", title: "Midnight Apex", caption: "Tunnel light streaks + engine RPM matched to BPM.", creatorHandle: "apexlane", creatorDisplayName: "Apex Lane", category: .cars, videoURL: samples[5], thumbnailGradient: ["#0B0E12", "#33EBD9"], likes: 54002, comments: 998, shares: 2601, isLiked: false, isSaved: false, durationLabel: "0:24", songTitle: "Carbon Night — EditVerse Sound"),
+        EditPost(id: "7", title: "Forest Rush Cut", caption: "Match cuts on footsteps. Soft bloom on the drop.", creatorHandle: "leafblade", creatorDisplayName: "Leafblade", category: .cinema, videoURL: samples[6], thumbnailGradient: ["#0A140E", "#B8F52E"], likes: 22104, comments: 411, shares: 980, isLiked: false, isSaved: false, durationLabel: "0:31", songTitle: "Mossline — EditVerse Sound"),
+        EditPost(id: "8", title: "Dream Sequence", caption: "Hard flash frames + ghost trails on every beat.", creatorHandle: "oneiric", creatorDisplayName: "Oneiric", category: .anime, videoURL: samples[7], thumbnailGradient: ["#12081A", "#33EBD9"], likes: 61002, comments: 1330, shares: 4104, isLiked: false, isSaved: false, durationLabel: "0:28", songTitle: "Lucid Grid — EditVerse Sound")
     ]
 }

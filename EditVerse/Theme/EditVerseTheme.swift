@@ -1,4 +1,5 @@
 import SwiftUI
+import AVFoundation
 
 enum EVTheme {
     static let ink = Color(red: 0.04, green: 0.05, blue: 0.07)
