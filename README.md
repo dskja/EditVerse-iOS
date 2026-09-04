@@ -6,12 +6,10 @@ Repo: https://github.com/dskja/EditVerse-iOS
 
 ## Build unsigned IPA (GitHub Actions)
 
-The workflow builds **only** an unsigned `EditVerse.ipa` — no simulator build.
+The workflow builds **only** an unsigned `EditVerse.ipa` — no simulator build, no GitHub Release.
 
 1. Push to `main`, or **Actions → Build EditVerse IPA → Run workflow**
-2. Get the IPA:
-   - **Releases → `unsigned-latest` → `EditVerse.ipa`** (direct `.ipa` download), or
-   - Actions artifact named `EditVerse.ipa`
+2. Download the Actions artifact **`EditVerse.ipa`**
 
 Unsigned = packaged IPA, not code-signed. Resign before installing on a device.
 

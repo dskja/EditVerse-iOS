@@ -26,6 +26,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Remove old unsigned-latest release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh release delete unsigned-latest --repo "${{ github.repository }}" --yes --cleanup-tag 2>/dev/null || true
+
       - name: Select Xcode
         run: |
           if [ -d /Applications/Xcode_15.4.app ]; then
@@ -65,7 +72,6 @@ jobs:
           mkdir -p "$STAGE/Payload" "$IPA_DIR"
           cp -R "$APP_PATH" "$STAGE/Payload/${APP_NAME}.app"
 
-          # Classic IPA layout: Payload/EditVerse.app
           (
             cd "$STAGE"
             ditto -c -k --sequesterRsrc --keepParent Payload "$IPA_DIR/${APP_NAME}.ipa"
@@ -81,26 +87,3 @@ jobs:
           path: ${{ env.IPA_DIR }}/EditVerse.ipa
           if-no-files-found: error
           compression-level: 0
-
-      - name: Publish IPA to GitHub Release
-        if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          IPA="$IPA_DIR/EditVerse.ipa"
-          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
-            TAG="${GITHUB_REF_NAME}"
-          else
-            TAG="unsigned-latest"
-            git tag -f "$TAG"
-            git push -f origin "refs/tags/$TAG"
-          fi
-
-          if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release upload "$TAG" "$IPA" --clobber
-          else
-            gh release create "$TAG" "$IPA" \
-              --title "EditVerse ${TAG}" \
-              --notes "Unsigned EditVerse IPA (not installable until resigned)."
-          fi
