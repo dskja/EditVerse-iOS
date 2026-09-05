@@ -1,157 +1,132 @@
 import SwiftUI
-import UIKit
 
 struct FeedView: View {
     @EnvironmentObject private var store: FeedStore
+    @EnvironmentObject private var session: SessionStore
     @Environment(\.scenePhase) private var scenePhase
     @State private var activeID: String?
     @State private var pausedIDs: Set<String> = []
-
-    private var posts: [EditPost] { store.filteredPosts }
+    @State private var showUpload = false
+    @State private var showAuth = false
 
     var body: some View {
         ZStack(alignment: .top) {
-            EVTheme.ink.ignoresSafeArea()
-
-            if posts.isEmpty {
+            EVTheme.void.ignoresSafeArea()
+            if store.isRefreshing && store.posts.isEmpty {
+                ProgressView().tint(EVTheme.tungsten)
+            } else if store.posts.isEmpty {
                 emptyState
             } else {
-                TabView(selection: $activeID) {
-                    ForEach(posts) { post in
-                        EditCardView(
-                            post: post,
-                            isActive: store.isFeedVisible && activeID == post.id && scenePhase == .active,
-                            isMuted: store.isMuted,
-                            isPaused: pausedIDs.contains(post.id),
-                            isFollowing: store.isFollowing(post.creatorHandle),
-                            onLike: {
-                                store.toggleLike(post.id)
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            },
-                            onSave: { store.toggleSave(post.id) },
-                            onFollow: { store.toggleFollow(post.creatorHandle) },
-                            onShare: { store.shareCountBump(post.id) },
-                            onToggleMute: { store.isMuted.toggle() },
-                            onTogglePause: {
-                                if pausedIDs.contains(post.id) {
-                                    pausedIDs.remove(post.id)
-                                } else {
-                                    pausedIDs.insert(post.id)
-                                }
+                GeometryReader { geo in
+                    ScrollView(.vertical, showsIndicators: false) {
+                        LazyVStack(spacing: 0) {
+                            ForEach(store.posts) { post in
+                                EditCardView(
+                                    post: post,
+                                    isActive: store.isFeedVisible && activeID == post.id && scenePhase == .active,
+                                    isMuted: store.isMuted,
+                                    isPaused: pausedIDs.contains(post.id),
+                                    onLike: { Task { await store.toggleLike(post.id) } },
+                                    onSave: {
+                                        guard session.isAuthenticated else { showAuth = true; return }
+                                        Task { await store.toggleSave(post.id) }
+                                    },
+                                    onFollow: {
+                                        guard session.isAuthenticated else { showAuth = true; return }
+                                        Task { await store.toggleFollow(username: post.author.username, editId: post.id) }
+                                    },
+                                    onShare: { Task { await store.shareBump(post.id) } },
+                                    onToggleMute: { store.isMuted.toggle() },
+                                    onTogglePause: {
+                                        if pausedIDs.contains(post.id) { pausedIDs.remove(post.id) }
+                                        else { pausedIDs.insert(post.id) }
+                                    }
+                                )
+                                .frame(width: geo.size.width, height: geo.size.height)
+                                .id(post.id)
                             }
-                        )
-                        .tag(Optional(post.id))
+                        }
+                        .scrollTargetLayout()
+                    }
+                    .scrollTargetBehavior(.paging)
+                    .scrollPosition(id: $activeID)
+                    .ignoresSafeArea()
+                    .onAppear { if activeID == nil { activeID = store.posts.first?.id } }
+                    .onChange(of: store.posts.map(\.id)) { _, ids in
+                        if activeID == nil || !ids.contains(where: { $0 == activeID }) { activeID = ids.first }
                     }
                 }
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                .ignoresSafeArea()
-                .onAppear { ensureActiveID() }
-                .onChange(of: store.selectedCategory) { _, _ in
-                    pausedIDs.removeAll()
-                    activeID = posts.first?.id
-                }
-                .onChange(of: store.activeTab) { _, tab in
-                    if tab == 0 { ensureActiveID() }
-                }
             }
-
             topChrome
         }
+        .task { await store.bootstrap() }
+        .sheet(isPresented: $showUpload) {
+            UploadView { post in store.prepend(post); activeID = post.id }
+                .environmentObject(session)
+        }
+        .sheet(isPresented: $showAuth) { AuthView().environmentObject(session) }
     }
 
     private var emptyState: some View {
-        VStack(spacing: 12) {
-            Image(systemName: "film.stack")
-                .font(.system(size: 42, weight: .bold))
-                .foregroundStyle(EVTheme.cyan)
-            Text("No edits in this lane")
-                .font(EVTheme.titleFont)
-                .foregroundStyle(EVTheme.soft)
-            Text("Pick another category or jump back to For You.")
-                .font(EVTheme.bodyFont)
-                .foregroundStyle(EVTheme.mist)
-                .multilineTextAlignment(.center)
-            Button("Back to For You") {
-                store.selectedCategory = nil
+        VStack(spacing: 18) {
+            Spacer()
+            Text("EDITVERSE").font(EVTheme.brandFont).tracking(6).foregroundStyle(EVTheme.tungsten)
+            Text("The stage is dark.").font(EVTheme.displayFont).foregroundStyle(EVTheme.ivory)
+            Text(store.errorMessage ?? "No edits yet. Be the first cut on the reel.")
+                .font(EVTheme.bodyFont).foregroundStyle(EVTheme.fog).multilineTextAlignment(.center).padding(.horizontal, 32)
+            Button {
+                if session.isAuthenticated { showUpload = true } else { showAuth = true }
+            } label: {
+                Text(session.isAuthenticated ? "Upload an Edit" : "Enter EditVerse")
+                    .font(EVTheme.captionFont).tracking(1.2).foregroundStyle(EVTheme.void)
+                    .padding(.horizontal, 18).padding(.vertical, 12).background(EVTheme.tungsten)
             }
-            .font(EVTheme.captionFont)
-            .foregroundStyle(EVTheme.ink)
-            .padding(.horizontal, 14)
-            .padding(.vertical, 10)
-            .background(EVTheme.lime)
-            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-            .padding(.top, 6)
+            Button("Refresh") { Task { await store.refreshFeed() } }
+                .font(EVTheme.captionFont).foregroundStyle(EVTheme.steel)
+            Spacer()
         }
-        .padding(24)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(EVTheme.stageGradient.ignoresSafeArea())
     }
 
     private var topChrome: some View {
         VStack(spacing: 10) {
             HStack {
-                Text("EditVerse")
-                    .font(.system(size: 28, weight: .black, design: .rounded))
-                    .foregroundStyle(
-                        LinearGradient(
-                            colors: [EVTheme.lime, EVTheme.cyan],
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        )
-                    )
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("EDITVERSE").font(.system(size: 22, weight: .bold, design: .serif)).tracking(4).foregroundStyle(EVTheme.ivory)
+                    Text("EDITS ONLY").font(EVTheme.captionFont).tracking(2).foregroundStyle(EVTheme.tungsten)
+                }
                 Spacer()
-                Text("EDITS ONLY")
-                    .font(EVTheme.captionFont)
-                    .tracking(1.2)
-                    .foregroundStyle(EVTheme.ink)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 6)
-                    .background(EVTheme.lime)
-                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                Button {
+                    if session.isAuthenticated { showUpload = true } else { showAuth = true }
+                } label: {
+                    Image(systemName: "plus.rectangle.on.rectangle")
+                        .font(.system(size: 18, weight: .semibold)).foregroundStyle(EVTheme.tungsten)
+                        .padding(10).background(EVTheme.stage.opacity(0.85))
+                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                }
             }
-            .padding(.horizontal, 18)
-            .padding(.top, 8)
-
+            .padding(.horizontal, 18).padding(.top, 8)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
-                    chip("For You", selected: store.selectedCategory == nil) {
-                        store.selectedCategory = nil
+                    chip("For You", store.selectedCategory == nil) { Task { await store.selectCategory(nil) } }
+                    ForEach(store.categories, id: \.self) { cat in
+                        chip(cat, store.selectedCategory == cat) { Task { await store.selectCategory(cat) } }
                     }
-                    ForEach(EditCategory.allCases) { category in
-                        chip(category.rawValue, selected: store.selectedCategory == category) {
-                            store.selectedCategory = category
-                        }
-                    }
-                }
-                .padding(.horizontal, 18)
+                }.padding(.horizontal, 18)
             }
         }
         .padding(.bottom, 10)
-        .background(
-            LinearGradient(
-                colors: [EVTheme.ink.opacity(0.94), EVTheme.ink.opacity(0)],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea(edges: .top)
-        )
+        .background(LinearGradient(colors: [EVTheme.void.opacity(0.92), EVTheme.void.opacity(0)], startPoint: .top, endPoint: .bottom).ignoresSafeArea(edges: .top))
     }
 
-    private func chip(_ title: String, selected: Bool, action: @escaping () -> Void) -> some View {
+    private func chip(_ title: String, _ selected: Bool, _ action: @escaping () -> Void) -> some View {
         Button(action: action) {
-            Text(title)
-                .font(EVTheme.captionFont)
-                .foregroundStyle(selected ? EVTheme.ink : EVTheme.soft)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 8)
-                .background(selected ? EVTheme.cyan : EVTheme.panel.opacity(0.9))
-                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-        }
-        .buttonStyle(.plain)
-    }
-
-    private func ensureActiveID() {
-        if activeID == nil || !posts.contains(where: { $0.id == activeID }) {
-            activeID = posts.first?.id
-        }
+            Text(title).font(EVTheme.captionFont).tracking(0.8)
+                .foregroundStyle(selected ? EVTheme.void : EVTheme.ivory)
+                .padding(.horizontal, 12).padding(.vertical, 8)
+                .background(selected ? EVTheme.tungsten : EVTheme.stage.opacity(0.9))
+                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                .overlay(RoundedRectangle(cornerRadius: 8, style: .continuous).stroke(EVTheme.tungsten.opacity(selected ? 0 : 0.25), lineWidth: 1))
+        }.buttonStyle(.plain)
     }
 }
