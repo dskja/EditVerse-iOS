@@ -3,7 +3,8 @@ import AVFoundation
 
 @main
 struct EditVerseApp: App {
-    @StateObject private var feedStore = FeedStore()
+    @StateObject private var session = SessionStore()
+    @StateObject private var feed = FeedStore()
 
     init() {
         try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [.mixWithOthers])
@@ -12,9 +13,25 @@ struct EditVerseApp: App {
 
     var body: some Scene {
         WindowGroup {
-            MainTabView()
-                .environmentObject(feedStore)
-                .preferredColorScheme(.dark)
+            Group {
+                if session.isBootstrapping {
+                    ZStack {
+                        EVTheme.stageGradient.ignoresSafeArea()
+                        VStack(spacing: 14) {
+                            Text("EDITVERSE")
+                                .font(EVTheme.brandFont)
+                                .tracking(8)
+                                .foregroundStyle(EVTheme.tungsten)
+                            ProgressView().tint(EVTheme.tungsten)
+                        }
+                    }
+                } else {
+                    MainTabView()
+                }
+            }
+            .environmentObject(session)
+            .environmentObject(feed)
+            .preferredColorScheme(.dark)
         }
     }
 }

@@ -1,129 +1,142 @@
 // !$*UTF8*$!
 {
 	archiveVersion = 1;
-	classes = {
-	};
+	classes = {};
 	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B0100000000000000000001 /* EditVerseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0100000000000000000001 /* EditVerseApp.swift */; };
-		B0200000000000000000001 /* EditPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0200000000000000000001 /* EditPost.swift */; };
-		B0300000000000000000001 /* EditVerseTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0300000000000000000001 /* EditVerseTheme.swift */; };
-		B0400000000000000000001 /* FeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0400000000000000000001 /* FeedStore.swift */; };
-		B0500000000000000000001 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0500000000000000000001 /* MainTabView.swift */; };
-		B0600000000000000000001 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0600000000000000000001 /* FeedView.swift */; };
-		B0700000000000000000001 /* EditCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0700000000000000000001 /* EditCardView.swift */; };
-		B0800000000000000000001 /* LoopingPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0800000000000000000001 /* LoopingPlayerView.swift */; };
-		B0900000000000000000001 /* DiscoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0900000000000000000001 /* DiscoverView.swift */; };
-		B1000000000000000000001 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000000000000000000001 /* ProfileView.swift */; };
-		BA0000000000000000000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA0000000000000000000001 /* Assets.xcassets */; };
+		3633DD490CFC3D30016E7F39 /* EditVerseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2325C2AA8F7E16922D1A02BD /* EditVerseApp.swift */; };
+		5DBCF1095B6D14C280A704E9 /* EditPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E558DB4138C479FF0C749D3 /* EditPost.swift */; };
+		E3C4344E19DCC0D122786CC9 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A316906F370F77753D6CD5 /* APIClient.swift */; };
+		2E93875F55E31CD83BD8811F /* FeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3750FD4458B622DF9C158E82 /* FeedStore.swift */; };
+		91F7F52F387E8EA000A0CE35 /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE17C1FDEBEAD196702852E /* SessionStore.swift */; };
+		EF50EDFA39A74806D475B503 /* EVTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52284EB40F1A26456D2E8FB /* EVTheme.swift */; };
+		1680356FE98C31793D92D590 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C490A31C2E0298E0A1FAAC3 /* AuthView.swift */; };
+		5B1EBEE37537FDC2B5B9CCD7 /* DiscoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266C1303E8AA8C748BD2151D /* DiscoverView.swift */; };
+		96B8DEE2A9E1E7B469B94CE8 /* EditCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ED464997F64CA77B3C3D72D /* EditCardView.swift */; };
+		A67DCBAFDF0729198DC05A3D /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C5435E1F2F84A1F63CF78A /* FeedView.swift */; };
+		604FBB7F874BD79F8F5660E8 /* LoopingPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BE5A7D9ADE9E6EC48864A3 /* LoopingPlayerView.swift */; };
+		D5F0F8733EA8392F975CDBAA /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D01678ECCA252062022BB96 /* MainTabView.swift */; };
+		197593E5EA42A1AC255F1428 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360591D6E02B6854B2EAF3E9 /* ProfileView.swift */; };
+		F635C12B9E1E7B5EA566EEF6 /* UploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CD5A6B18CFA38D64B50DF4 /* UploadView.swift */; };
+		4E8F372CB7F2B81A77E29D85 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32BB636196F91ED59D7A4919 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		F0100000000000000000001 /* EditVerseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditVerseApp.swift; sourceTree = "<group>"; };
-		F0200000000000000000001 /* EditPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPost.swift; sourceTree = "<group>"; };
-		F0300000000000000000001 /* EditVerseTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditVerseTheme.swift; sourceTree = "<group>"; };
-		F0400000000000000000001 /* FeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStore.swift; sourceTree = "<group>"; };
-		F0500000000000000000001 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
-		F0600000000000000000001 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
-		F0700000000000000000001 /* EditCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardView.swift; sourceTree = "<group>"; };
-		F0800000000000000000001 /* LoopingPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopingPlayerView.swift; sourceTree = "<group>"; };
-		F0900000000000000000001 /* DiscoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverView.swift; sourceTree = "<group>"; };
-		F1000000000000000000001 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
-		FA0000000000000000000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		FI0000000000000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FP0000000000000000000001 /* EditVerse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EditVerse.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2325C2AA8F7E16922D1A02BD /* EditVerseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditVerseApp.swift; sourceTree = "<group>"; };
+		2E558DB4138C479FF0C749D3 /* EditPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPost.swift; sourceTree = "<group>"; };
+		14A316906F370F77753D6CD5 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		3750FD4458B622DF9C158E82 /* FeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStore.swift; sourceTree = "<group>"; };
+		9DE17C1FDEBEAD196702852E /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
+		C52284EB40F1A26456D2E8FB /* EVTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EVTheme.swift; sourceTree = "<group>"; };
+		2C490A31C2E0298E0A1FAAC3 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		266C1303E8AA8C748BD2151D /* DiscoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverView.swift; sourceTree = "<group>"; };
+		0ED464997F64CA77B3C3D72D /* EditCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardView.swift; sourceTree = "<group>"; };
+		B5C5435E1F2F84A1F63CF78A /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
+		63BE5A7D9ADE9E6EC48864A3 /* LoopingPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopingPlayerView.swift; sourceTree = "<group>"; };
+		8D01678ECCA252062022BB96 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		360591D6E02B6854B2EAF3E9 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		31CD5A6B18CFA38D64B50DF4 /* UploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadView.swift; sourceTree = "<group>"; };
+		32BB636196F91ED59D7A4919 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CAF9B6B99962BF5C22648242 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F5BF48AA40CAD7891EB709FC /* EditVerse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EditVerse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		FF0000000000000000000001 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
+		8F51EF3B9040A527832BEBBA /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		G00000000000000000000001 = {
+		125FD80C0DE2B2AAE1122BB7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				G00000000000000000000002 /* EditVerse */,
-				G00000000000000000000003 /* Products */,
-			);
-			sourceTree = "<group>";
-		};
-		G00000000000000000000002 /* EditVerse */ = {
-			isa = PBXGroup;
-			children = (
-				F0100000000000000000001 /* EditVerseApp.swift */,
-				G00000000000000000000004 /* Models */,
-				G00000000000000000000005 /* Views */,
-				G00000000000000000000006 /* Services */,
-				G00000000000000000000007 /* Theme */,
-				FA0000000000000000000001 /* Assets.xcassets */,
-				FI0000000000000000000001 /* Info.plist */,
-			);
-			path = EditVerse;
-			sourceTree = "<group>";
-		};
-		G00000000000000000000003 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				FP0000000000000000000001 /* EditVerse.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		G00000000000000000000004 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				F0200000000000000000001 /* EditPost.swift */,
+				2E558DB4138C479FF0C749D3 /* EditPost.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		G00000000000000000000005 /* Views */ = {
+		61CB69D99DBE513D92A63E90 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				F0500000000000000000001 /* MainTabView.swift */,
-				F0600000000000000000001 /* FeedView.swift */,
-				F0700000000000000000001 /* EditCardView.swift */,
-				F0800000000000000000001 /* LoopingPlayerView.swift */,
-				F0900000000000000000001 /* DiscoverView.swift */,
-				F1000000000000000000001 /* ProfileView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		G00000000000000000000006 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				F0400000000000000000001 /* FeedStore.swift */,
+				3750FD4458B622DF9C158E82 /* FeedStore.swift */,
+				9DE17C1FDEBEAD196702852E /* SessionStore.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
 		};
-		G00000000000000000000007 /* Theme */ = {
+		9C52EBF1538BC7C1C584DA2D /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				F0300000000000000000001 /* EditVerseTheme.swift */,
+				14A316906F370F77753D6CD5 /* APIClient.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		A971597B25B7B11D3267B744 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				C52284EB40F1A26456D2E8FB /* EVTheme.swift */,
 			);
 			path = Theme;
+			sourceTree = "<group>";
+		};
+		9DAC8FE2B6FE9F1FD16DC661 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2C490A31C2E0298E0A1FAAC3 /* AuthView.swift */,
+				266C1303E8AA8C748BD2151D /* DiscoverView.swift */,
+				0ED464997F64CA77B3C3D72D /* EditCardView.swift */,
+				B5C5435E1F2F84A1F63CF78A /* FeedView.swift */,
+				63BE5A7D9ADE9E6EC48864A3 /* LoopingPlayerView.swift */,
+				8D01678ECCA252062022BB96 /* MainTabView.swift */,
+				360591D6E02B6854B2EAF3E9 /* ProfileView.swift */,
+				31CD5A6B18CFA38D64B50DF4 /* UploadView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D2A57DC1D883FD21FB995169 /* EditVerse */ = {
+			isa = PBXGroup;
+			children = (
+				2325C2AA8F7E16922D1A02BD /* EditVerseApp.swift */,
+				125FD80C0DE2B2AAE1122BB7 /* Models */,
+				61CB69D99DBE513D92A63E90 /* Services */,
+				9C52EBF1538BC7C1C584DA2D /* Networking */,
+				A971597B25B7B11D3267B744 /* Theme */,
+				9DAC8FE2B6FE9F1FD16DC661 /* Views */,
+				32BB636196F91ED59D7A4919 /* Assets.xcassets */,
+				CAF9B6B99962BF5C22648242 /* Info.plist */,
+			);
+			path = EditVerse;
+			sourceTree = "<group>";
+		};
+		D6E4A9B6646C62FC48BAA6DD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F5BF48AA40CAD7891EB709FC /* EditVerse.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FAD58DE7366495DB4650CFEF = {
+			isa = PBXGroup;
+			children = (
+				D2A57DC1D883FD21FB995169 /* EditVerse */,
+				D6E4A9B6646C62FC48BAA6DD /* Products */,
+			);
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		T00000000000000000000001 /* EditVerse */ = {
+		42AEFBAE01D2DFD981F7DA7D /* EditVerse */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C00000000000000000000003 /* Build configuration list for PBXNativeTarget "EditVerse" */;
+			buildConfigurationList = DD5B959833E219C36151D647 /* Build configuration list for PBXNativeTarget "EditVerse" */;
 			buildPhases = (
-				P00000000000000000000001 /* Sources */,
-				FF0000000000000000000001 /* Frameworks */,
-				P00000000000000000000002 /* Resources */,
+				25D902C24283AB8CFBAC54DF /* Sources */,
+				8F51EF3B9040A527832BEBBA /* Frameworks */,
+				9B207167E5381C47682C6B4F /* Resources */,
 			);
 			buildRules = (
 			);
@@ -131,122 +144,97 @@
 			);
 			name = EditVerse;
 			productName = EditVerse;
-			productReference = FP0000000000000000000001 /* EditVerse.app */;
+			productReference = F5BF48AA40CAD7891EB709FC /* EditVerse.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		P00000000000000000000000 /* Project object */ = {
+		46F86FAA6BBF9AC94A7E4595 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
-				TargetAttributes = {
-					T00000000000000000000001 = {
-						CreatedOnToolsVersion = 15.0;
-					};
-				};
 			};
-			buildConfigurationList = C00000000000000000000001 /* Build configuration list for PBXProject "EditVerse" */;
+			buildConfigurationList = 2CA666E9AB7FD185F98B8152 /* Build configuration list for PBXProject "EditVerse" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
-			knownRegions = (
-				en,
-				Base,
-			);
-			mainGroup = G00000000000000000000001;
-			productRefGroup = G00000000000000000000003 /* Products */;
+			knownRegions = ( en, Base );
+			mainGroup = FAD58DE7366495DB4650CFEF;
+			productRefGroup = D6E4A9B6646C62FC48BAA6DD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
-			targets = (
-				T00000000000000000000001 /* EditVerse */,
-			);
+			targets = ( 42AEFBAE01D2DFD981F7DA7D /* EditVerse */ );
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		P00000000000000000000002 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BA0000000000000000000001 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
+		9B207167E5381C47682C6B4F /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = ( 4E8F372CB7F2B81A77E29D85 /* Assets.xcassets in Resources */, ); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		P00000000000000000000001 /* Sources */ = {
+		25D902C24283AB8CFBAC54DF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B0100000000000000000001 /* EditVerseApp.swift in Sources */,
-				B0200000000000000000001 /* EditPost.swift in Sources */,
-				B0300000000000000000001 /* EditVerseTheme.swift in Sources */,
-				B0400000000000000000001 /* FeedStore.swift in Sources */,
-				B0500000000000000000001 /* MainTabView.swift in Sources */,
-				B0600000000000000000001 /* FeedView.swift in Sources */,
-				B0700000000000000000001 /* EditCardView.swift in Sources */,
-				B0800000000000000000001 /* LoopingPlayerView.swift in Sources */,
-				B0900000000000000000001 /* DiscoverView.swift in Sources */,
-				B1000000000000000000001 /* ProfileView.swift in Sources */,
+				3633DD490CFC3D30016E7F39 /* EditVerseApp.swift in Sources */,
+				5DBCF1095B6D14C280A704E9 /* EditPost.swift in Sources */,
+				E3C4344E19DCC0D122786CC9 /* APIClient.swift in Sources */,
+				2E93875F55E31CD83BD8811F /* FeedStore.swift in Sources */,
+				91F7F52F387E8EA000A0CE35 /* SessionStore.swift in Sources */,
+				EF50EDFA39A74806D475B503 /* EVTheme.swift in Sources */,
+				1680356FE98C31793D92D590 /* AuthView.swift in Sources */,
+				5B1EBEE37537FDC2B5B9CCD7 /* DiscoverView.swift in Sources */,
+				96B8DEE2A9E1E7B469B94CE8 /* EditCardView.swift in Sources */,
+				A67DCBAFDF0729198DC05A3D /* FeedView.swift in Sources */,
+				604FBB7F874BD79F8F5660E8 /* LoopingPlayerView.swift in Sources */,
+				D5F0F8733EA8392F975CDBAA /* MainTabView.swift in Sources */,
+				197593E5EA42A1AC255F1428 /* ProfileView.swift in Sources */,
+				F635C12B9E1E7B5EA566EEF6 /* UploadView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		CFG000000000000000000001 /* Debug */ = {
+		BDBC475092EF64D21C5DE60B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_TESTABILITY = YES;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		CFG000000000000000000002 /* Release */ = {
+		80D34FDBFC214A62DA2B7427 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		CFG000000000000000000003 /* Debug */ = {
+		40EE942D4E7DF005E21C0771 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = EditVerse/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = ( "$(inherited)", "@executable_path/Frameworks", );
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.editverse.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -256,20 +244,16 @@
 			};
 			name = Debug;
 		};
-		CFG000000000000000000004 /* Release */ = {
+		29B64A418306CC02D181FEE4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = EditVerse/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = ( "$(inherited)", "@executable_path/Frameworks", );
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.editverse.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -282,25 +266,19 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C00000000000000000000001 /* Build configuration list for PBXProject "EditVerse" */ = {
+		2CA666E9AB7FD185F98B8152 /* Build configuration list for PBXProject "EditVerse" */ = {
 			isa = XCConfigurationList;
-			buildConfigurations = (
-				CFG000000000000000000001 /* Debug */,
-				CFG000000000000000000002 /* Release */,
-			);
+			buildConfigurations = ( BDBC475092EF64D21C5DE60B /* Debug */, 80D34FDBFC214A62DA2B7427 /* Release */ );
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C00000000000000000000003 /* Build configuration list for PBXNativeTarget "EditVerse" */ = {
+		DD5B959833E219C36151D647 /* Build configuration list for PBXNativeTarget "EditVerse" */ = {
 			isa = XCConfigurationList;
-			buildConfigurations = (
-				CFG000000000000000000003 /* Debug */,
-				CFG000000000000000000004 /* Release */,
-			);
+			buildConfigurations = ( 40EE942D4E7DF005E21C0771 /* Debug */, 29B64A418306CC02D181FEE4 /* Release */ );
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = P00000000000000000000000 /* Project object */;
+	rootObject = 46F86FAA6BBF9AC94A7E4595 /* Project object */;
 }
