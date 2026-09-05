@@ -2,110 +2,124 @@ import SwiftUI
 
 struct ProfileView: View {
     @EnvironmentObject private var store: FeedStore
-
-    private var saved: [EditPost] { store.posts.filter(\.isSaved) }
-    private var liked: [EditPost] { store.posts.filter(\.isLiked) }
+    @EnvironmentObject private var session: SessionStore
+    @State private var showAuth = false
+    @State private var saved: [EditPost] = []
+    @State private var liked: [EditPost] = []
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 22) {
-                    HStack(spacing: 14) {
-                        Circle()
-                            .fill(
-                                LinearGradient(
-                                    colors: [EVTheme.lime, EVTheme.cyan],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
+                    if let user = session.user {
+                        HStack(spacing: 14) {
+                            Circle()
+                                .fill(EVTheme.tungsten.gradient)
+                                .frame(width: 72, height: 72)
+                                .overlay(
+                                    Text(String(user.displayName.prefix(1)).uppercased())
+                                        .font(.system(size: 26, weight: .bold, design: .serif))
+                                        .foregroundStyle(EVTheme.void)
                                 )
-                            )
-                            .frame(width: 72, height: 72)
-                            .overlay(
-                                Text("EV")
-                                    .font(.system(size: 24, weight: .black, design: .rounded))
-                                    .foregroundStyle(EVTheme.ink)
-                            )
-
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text("Your Edit Desk")
-                                .font(EVTheme.titleFont)
-                                .foregroundStyle(EVTheme.soft)
-                            Text("Curator mode · \(store.following.count) following")
-                                .font(EVTheme.bodyFont)
-                                .foregroundStyle(EVTheme.mist)
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text(user.displayName).font(EVTheme.displayFont).foregroundStyle(EVTheme.ivory)
+                                Text("@\(user.username)").font(EVTheme.bodyFont).foregroundStyle(EVTheme.steel)
+                                Text("\(user.followersCount) followers · \(user.editsCount) edits")
+                                    .font(EVTheme.captionFont).foregroundStyle(EVTheme.fog)
+                            }
                         }
+                        HStack(spacing: 12) {
+                            stat("Saved", "\(saved.count)")
+                            stat("Liked", "\(liked.count)")
+                            stat("Following", "\(user.followingCount)")
+                        }
+                        Button("Sign out") { session.logout() }
+                            .font(EVTheme.captionFont)
+                            .foregroundStyle(EVTheme.ember)
+                        section("Saved Edits", saved)
+                        section("Liked Edits", liked)
+                    } else {
+                        VStack(spacing: 16) {
+                            Text("EDITVERSE")
+                                .font(EVTheme.brandFont)
+                                .tracking(6)
+                                .foregroundStyle(EVTheme.tungsten)
+                            Text("Sign in to save cuts, follow editors, and publish.")
+                                .font(EVTheme.bodyFont)
+                                .foregroundStyle(EVTheme.fog)
+                                .multilineTextAlignment(.center)
+                            Button("Enter EditVerse") { showAuth = true }
+                                .font(EVTheme.captionFont)
+                                .foregroundStyle(EVTheme.void)
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 12)
+                                .background(EVTheme.tungsten)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.top, 80)
                     }
-
-                    HStack(spacing: 12) {
-                        statTile(title: "Saved", value: "\(saved.count)")
-                        statTile(title: "Liked", value: "\(liked.count)")
-                        statTile(title: "Following", value: "\(store.following.count)")
-                    }
-
-                    section(title: "Saved Edits", posts: saved)
-                    section(title: "Liked Edits", posts: liked)
                 }
                 .padding(16)
             }
-            .background(EVTheme.ink.ignoresSafeArea())
+            .background(EVTheme.void.ignoresSafeArea())
             .navigationTitle("Profile")
-            .toolbarBackground(EVTheme.ink, for: .navigationBar)
+            .toolbarBackground(EVTheme.void, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
+            .sheet(isPresented: $showAuth) { AuthView().environmentObject(session) }
+            .task(id: session.token) { await loadLists() }
         }
     }
 
-    private func statTile(title: String, value: String) -> some View {
+    private func stat(_ title: String, _ value: String) -> some View {
         VStack(spacing: 4) {
-            Text(value)
-                .font(.system(size: 20, weight: .black, design: .rounded))
-                .foregroundStyle(EVTheme.lime)
-            Text(title)
-                .font(EVTheme.captionFont)
-                .foregroundStyle(EVTheme.mist)
+            Text(value).font(.system(size: 20, weight: .bold, design: .serif)).foregroundStyle(EVTheme.tungsten)
+            Text(title).font(EVTheme.captionFont).foregroundStyle(EVTheme.fog)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 14)
-        .background(EVTheme.panel)
-        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .background(EVTheme.stage)
+        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
     }
 
-    private func section(title: String, posts: [EditPost]) -> some View {
+    private func section(_ title: String, _ posts: [EditPost]) -> some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text(title)
-                .font(EVTheme.titleFont)
-                .foregroundStyle(EVTheme.soft)
-
+            Text(title).font(EVTheme.titleFont).foregroundStyle(EVTheme.ivory)
             if posts.isEmpty {
-                Text("Nothing here yet — double-tap edits you love.")
-                    .font(EVTheme.bodyFont)
-                    .foregroundStyle(EVTheme.mist)
+                Text("Nothing here yet.").font(EVTheme.bodyFont).foregroundStyle(EVTheme.fog)
             } else {
                 ForEach(posts) { post in
-                    Button {
-                        store.selectedCategory = post.category
-                        store.activeTab = 0
-                    } label: {
+                    Button { store.activeTab = 0 } label: {
                         HStack {
                             VStack(alignment: .leading, spacing: 4) {
-                                Text(post.title)
-                                    .font(EVTheme.bodyFont)
-                                    .foregroundStyle(EVTheme.soft)
-                                Text(post.category.rawValue)
-                                    .font(EVTheme.captionFont)
-                                    .foregroundStyle(EVTheme.cyan)
+                                Text(post.title).font(EVTheme.bodyFont).foregroundStyle(EVTheme.ivory)
+                                Text(post.category).font(EVTheme.captionFont).foregroundStyle(EVTheme.tungsten)
                             }
                             Spacer()
-                            Text(post.durationLabel)
-                                .font(EVTheme.captionFont)
-                                .foregroundStyle(EVTheme.mist)
+                            Text(post.durationLabel).font(EVTheme.captionFont).foregroundStyle(EVTheme.fog)
                         }
                         .padding(12)
-                        .background(EVTheme.panel)
-                        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                        .background(EVTheme.stage)
+                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                     }
                     .buttonStyle(.plain)
                 }
             }
         }
+    }
+
+    private func loadLists() async {
+        guard session.isAuthenticated else { saved = []; liked = []; return }
+        do {
+            let s: ItemsEnvelope<EditPost> = try await APIClient.shared.request(
+                "GET", path: "/api/users/me/saved", authorized: true
+            )
+            saved = s.items
+        } catch { saved = [] }
+        do {
+            let l: ItemsEnvelope<EditPost> = try await APIClient.shared.request(
+                "GET", path: "/api/users/me/liked", authorized: true
+            )
+            liked = l.items
+        } catch { liked = [] }
     }
 }
